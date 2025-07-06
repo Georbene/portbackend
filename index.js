@@ -4,7 +4,7 @@ const cors = require('cors');
 const fs = require('fs');
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: 'https://your-frontend-url.vercel.app' })); // Replace with frontend URL
 
 app.post('/send-email', (req, res) => {
   const { name, email, subject, message, submissionTime } = req.body;
@@ -16,9 +16,8 @@ app.post('/send-email', (req, res) => {
       console.error('Error writing to file:', err);
       return res.status(500).send('Error saving message');
     }
+    res.status(200).send('Message received successfully');
   });
-
-  res.status(200).send('Message received');
 });
 
 app.get('/messages', (req, res) => {
